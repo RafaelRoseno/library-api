@@ -1,5 +1,6 @@
-package com.library.api.exception;
+package com.library.api.exception.handler;
 
+import com.library.api.exception.BookNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,6 +1,8 @@
 package com.library.api.controller;
 
 import com.library.api.dto.BookDto;
+import com.library.api.dto.book.request.InsertBookRequestDto;
+import com.library.api.dto.book.response.InsertBookResponseDto;
 import com.library.api.exception.BookNotFoundException;
 import com.library.api.service.BookService;
 import jakarta.validation.Valid;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("book")
@@ -18,10 +22,10 @@ public class BookController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> insertBook(@RequestBody @Valid BookDto dto){
+    public ResponseEntity<List<InsertBookResponseDto>> insertBook(@RequestBody @Valid List<InsertBookRequestDto> dto){
 
-        bookService.insertBook(dto);
-        return ResponseEntity.ok("success");
+        List<InsertBookResponseDto> books = bookService.insertBook(dto);
+        return ResponseEntity.ok(books);
 
     }
 

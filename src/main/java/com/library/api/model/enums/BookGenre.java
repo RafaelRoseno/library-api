@@ -1,4 +1,4 @@
-package com.library.api.model;
+package com.library.api.model.enums;
 
 public enum BookGenre {
 
