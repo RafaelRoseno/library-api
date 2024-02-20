@@ -2,6 +2,7 @@ package com.library.api.controller;
 
 import com.library.api.dto.BookDto;
 import com.library.api.dto.book.request.InsertBookRequestDto;
+import com.library.api.dto.book.response.GetBookInfoResponseDto;
 import com.library.api.dto.book.response.InsertBookResponseDto;
 import com.library.api.exception.BookNotFoundException;
 import com.library.api.service.BookService;
@@ -23,27 +24,26 @@ public class BookController {
     @PostMapping
     @Transactional
     public ResponseEntity<List<InsertBookResponseDto>> insertBook(@RequestBody @Valid List<InsertBookRequestDto> dto){
-
         List<InsertBookResponseDto> books = bookService.insertBook(dto);
         return ResponseEntity.ok(books);
+    }
 
+    @GetMapping
+    public ResponseEntity<List<GetBookInfoResponseDto>> getBooksInfo(){
+        List<GetBookInfoResponseDto> books = bookService.getBookInfo();
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/id")
-    public ResponseEntity<BookDto> getBookInfoById(@RequestParam(required = true) Long id){
-        try{
-            BookDto book = bookService.getBookInfo(id);
-            return ResponseEntity.ok(book);
-        }catch (NullPointerException ex){
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<GetBookInfoResponseDto> getBookInfoById(@RequestParam(required = true) Long id){
+        GetBookInfoResponseDto book = bookService.getBookInfoById(id);
+        return ResponseEntity.ok(book);
     }
 
     @GetMapping("/title")
-    public ResponseEntity<String> getBookInfoByTitle(@RequestParam(required = true) String title){
-
-        bookService.getBookInfo(title);
-        return ResponseEntity.ok("success");
+    public ResponseEntity<List<GetBookInfoResponseDto>> getBookInfoByTitle(@RequestParam(required = true) String title){
+        List<GetBookInfoResponseDto> books = bookService.getBookInfoByTitle(title);
+        return ResponseEntity.ok(books);
     }
 
 }
